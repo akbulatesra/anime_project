@@ -6,7 +6,7 @@ import SigninForm from '../../components/specialComponents/SigninForm';
 import styles from './styles.module.scss';
 
 const Login = () => {
-  const [signUp, setSignUp] = useState<boolean>(true);
+  const [signUp, setSignUp] = useState<boolean>(false);
 
   return (
     <Wrapper>

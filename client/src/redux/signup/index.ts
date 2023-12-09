@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../utils/url';
+import { defaultValidateStatus } from '../../utils/query';
+import { BASE_URL } from '../../utils/url';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -8,10 +9,11 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     register: builder.mutation<void, FormData>({
-      query: (FormData) => ({
+      query: (formData) => ({
         url: '/api/auth/register',
         method: 'POST',
-        body: FormData,
+        body: formData,
+        validateStatus: (response) => defaultValidateStatus(response),
       }),
     }),
   }),

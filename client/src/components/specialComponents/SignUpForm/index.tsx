@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-toastify';
-import { useRegisterMutation } from '../../../redux/api';
-import { useAppSelector } from '../../../redux/hooks';
+import { string, z } from 'zod';
+import { useRegisterMutation } from '../../../redux/signup';
+import { isErrorWithMessage } from '../../../utils/query';
 import { Button } from '../../generalComponents/Buttons';
 import { Info } from '../../generalComponents/Fonts';
 import {
@@ -17,36 +18,38 @@ interface SignUpForm {
 }
 
 const SignUpForm: React.FC<SignUpForm> = ({ setSignUp }) => {
-  const [register, { isLoading, error }] = useRegisterMutation();
-  const authApiState = useAppSelector((state) => state.authApi);
+  const [register, { isLoading }] = useRegisterMutation();
+
+  const formSchema = z.object({
+    username: string().min(1, 'Please enter an username'),
+    email: string().email('please valid an email'),
+    password: string().min(1, 'passwords is required'),
+  });
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const username = formData.get('username') as string;
-    const password = formData.get('password') as string;
-    const email = formData.get('email') as string;
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
+
+    const validatedData = formSchema.safeParse(Object.fromEntries(formData));
+
+    if (!validatedData.success) {
+      toast.error(validatedData.error.errors[0].message);
+      return;
+    }
 
     try {
-      if (!username || !password || !email) {
-        toast.warning('Enter all information completely');
-      } else {
-        await register(formData);
-        //HATAYI GÖSTER
+      await register(formData).unwrap();
+    } catch (err) {
+      if (isErrorWithMessage(err)) {
+        toast.error(err.data.message);
       }
-    } catch (error) {
-      toast.error('Signup failed');
-      console.log(error);
     }
   };
-  console.log('authApiState', error, authApiState);
   return (
     <section className={styles.formWrapper}>
       {isLoading && <Loading />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} method="POST">
         <Input_Text
           id="username"
           labelText="User Name"

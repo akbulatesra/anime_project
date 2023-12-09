@@ -8,6 +8,7 @@ import { store } from './redux/store';
 
 const Login = lazy(() => import('./pages/Login'));
 const Animes = lazy(() => import('./pages/Animes'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
   return (
@@ -15,10 +16,29 @@ function App() {
       <Toast />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LazyComponent children={<Login />} />} />
+          <Route
+            path="/"
+            element={
+              <LazyComponent>
+                <Login />
+              </LazyComponent>
+            }
+          />
           <Route
             path="/animes"
-            element={<LazyComponent children={<Animes />} />}
+            element={
+              <LazyComponent>
+                <Animes />
+              </LazyComponent>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <LazyComponent>
+                <Profile />
+              </LazyComponent>
+            }
           />
         </Routes>
       </BrowserRouter>

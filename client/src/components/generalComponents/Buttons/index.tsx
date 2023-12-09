@@ -5,6 +5,7 @@ interface ButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   placeholder: string;
   extraStyle?: string;
   isDark?: boolean;
+  onClick?: () => void;
 }
 
 export const Button = ({
@@ -12,12 +13,17 @@ export const Button = ({
   extraStyle,
   isDark = false,
   type = 'button',
+  onClick,
 }: ButtonsProps) => {
   const buttonClassName = `${isDark ? styles.buttonDark : styles.buttonLight} ${
     extraStyle || ''
   }`;
   return (
-    <button className={buttonClassName} type={type}>
+    <button
+      className={buttonClassName}
+      type={type}
+      onClick={onClick ? onClick : undefined}
+    >
       {placeholder}
     </button>
   );

@@ -15,6 +15,11 @@ export const SubTitle = ({ children, extraStyle }: WrapperProps) => {
   return <h2 className={fontClassName}>{children}</h2>;
 };
 
+export const MiniTitle = ({ children, extraStyle }: WrapperProps) => {
+  const fontClassName = `${styles.minititle} ${extraStyle || ''}`;
+  return <h2 className={fontClassName}>{children}</h2>;
+};
+
 export const MainFont = ({ children, extraStyle }: WrapperProps) => {
   const fontClassName = `${styles.mainFont} ${extraStyle || ''}`;
   return <p className={fontClassName}>{children}</p>;
