@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { OpenAPIHono } from "@hono/zod-openapi";
-import { StatusCodes } from "http-status-codes";
-import { CustomHttpException } from "../../helpers/CustomHttpException";
-import { searchAnimeOnMAL } from "../../services";
-import { authenticateToken } from "../../shared/middleware/auth";
-import { AnimeList } from "./model";
+import { OpenAPIHono } from '@hono/zod-openapi';
+import { StatusCodes } from 'http-status-codes';
+import { CustomHttpException } from '../../helpers/CustomHttpException';
+import { searchAnimeOnMAL } from '../../services';
+import { authenticateToken } from '../../shared/middleware/auth';
+import { AnimeList } from './model';
 import {
   animeDeleteRoute,
   animeInsertRoute,
   animeListRoute,
   animeSearchRoute,
-} from "./routes";
+} from './routes';
 
 export const animeApp = new OpenAPIHono({
   defaultHook: (result) => {
@@ -21,30 +21,30 @@ export const animeApp = new OpenAPIHono({
   },
 });
 
-animeApp.use("*", authenticateToken);
+animeApp.use('*', authenticateToken);
 
 animeApp.openapi(animeListRoute, async (c) => {
-  const { id: userId } = c.get("jwtPayload");
+  const { id: userId } = c.get('jwtPayload');
   console.log({ userId });
   const animeList = await AnimeList.findOne({ user: userId });
 
   if (!animeList) {
-    console.log("noluyo");
-    throw new CustomHttpException("Anime list not found", StatusCodes.GONE);
+    console.log('noluyo');
+    throw new CustomHttpException('Anime list not found', StatusCodes.GONE);
   }
 
   return c.json({ data: animeList.animes }, 200);
 });
 
 animeApp.openapi(animeInsertRoute, async (c) => {
-  const { id: userId } = c.get("jwtPayload");
+  const { id: userId } = c.get('jwtPayload');
   const {
     malId,
     title,
     imageUrl,
     lastCheckedEpisodeDate,
     lastCheckedEpisodeNumber,
-  } = c.req.valid("json");
+  } = c.req.valid('json');
 
   let animeList = await AnimeList.findOne({ user: userId });
   if (!animeList) {
@@ -54,7 +54,7 @@ animeApp.openapi(animeInsertRoute, async (c) => {
   const animeExists = animeList.animes.find((anime) => anime.malId === malId);
   if (animeExists) {
     throw new CustomHttpException(
-      "Anime already in list",
+      'Anime already in list',
       StatusCodes.CONFLICT
     );
   }
@@ -78,8 +78,8 @@ animeApp.openapi(animeInsertRoute, async (c) => {
 });
 
 animeApp.openapi(animeDeleteRoute, async (c) => {
-  const { id: userId } = c.get("jwtPayload");
-  const { malId } = c.req.valid("json");
+  const { id: userId } = c.get('jwtPayload');
+  const { malId } = c.req.valid('json');
 
   let animeList = await AnimeList.findOne({ user: userId });
   if (!animeList) {
@@ -88,7 +88,7 @@ animeApp.openapi(animeDeleteRoute, async (c) => {
 
   const animeExists = animeList.animes.find((anime) => anime.malId === malId);
   if (!animeExists) {
-    throw new CustomHttpException("Anime not found", StatusCodes.GONE);
+    throw new CustomHttpException('Anime not found', StatusCodes.GONE);
   }
 
   const excludedAnime = animeList.animes.filter(
@@ -97,7 +97,12 @@ animeApp.openapi(animeDeleteRoute, async (c) => {
   animeList.animes = excludedAnime;
   await animeList.save();
 
-  return c.json({}, StatusCodes.NO_CONTENT);
+  return c.json(
+    {
+      success: 'true',
+    },
+    StatusCodes.OK
+  );
 });
 
 animeApp.openapi(animeSearchRoute, async (c) => {

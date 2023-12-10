@@ -8,7 +8,6 @@ import { store } from './redux/store';
 
 const Login = lazy(() => import('./pages/Login'));
 const Animes = lazy(() => import('./pages/Animes'));
-const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
   return (
@@ -29,14 +28,6 @@ function App() {
             element={
               <LazyComponent>
                 <Animes />
-              </LazyComponent>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <LazyComponent>
-                <Profile />
               </LazyComponent>
             }
           />

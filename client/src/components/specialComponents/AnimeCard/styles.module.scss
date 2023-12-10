@@ -1,9 +1,66 @@
 .box {
   box-shadow: 4px 4px 15px rgba(86, 160, 164, 0.14);
   border-radius: 14px;
+  background-color: rgba(225, 225, 225, 1);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  height: 400px;
 }
-.image {
-  height: 250px;
-  width: 250px;
-  object-fit: contain;
+
+.title {
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoWrapper {
+  display: flex;
+
+  img {
+    height: 200px;
+    width: 150px;
+    object-fit: cover;
+    margin: 0 20px;
+  }
+  ul {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    row-gap: 5px;
+    p {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--red);
+    }
+  }
+}
+
+.infoWrapperRight {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+  button {
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+    margin: auto 0 20px 0;
+  }
+}
+
+.text {
+  max-height: 150px;
+  width: 90%;
+  margin: 0 auto;
+  overflow-y: auto;
+  font-size: 14px;
 }

@@ -5,10 +5,11 @@ export interface Anime {
   createdDate?: string;
   episodesAndDuration?: string;
   genres: string[];
-  imageUrl?: string;
+  imageUrl: string;
   malId: string;
   preLine?: string;
   title: string;
+  id?: string;
 }
 export const animesApi = createApi({
   reducerPath: 'animesApi',
@@ -16,7 +17,7 @@ export const animesApi = createApi({
     baseUrl: BASE_URL,
   }),
   endpoints: (builder) => ({
-    listAnimes: builder.query<[Anime], void>({
+    listAnimes: builder.query<Anime[], void>({
       query: () => ({
         url: '/api/season',
         method: 'GET',
