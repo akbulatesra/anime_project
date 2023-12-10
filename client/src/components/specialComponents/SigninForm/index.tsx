@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { string, z } from 'zod';
@@ -19,7 +19,7 @@ const formSchema = z.object({
 });
 
 const SigninForm: React.FC<SigninForm> = ({ setSignUp }) => {
-  const [register, { isLoading, data }] = useLoginMutation();
+  const [register, { isLoading }] = useLoginMutation();
 
   const navigate = useNavigate();
 
@@ -36,16 +36,15 @@ const SigninForm: React.FC<SigninForm> = ({ setSignUp }) => {
     }
 
     try {
-      await register(formData).unwrap();
+      const token = (await register(formData).unwrap()).token;
+      token && navigate('/animes');
     } catch (err) {
       if (isErrorWithMessage(err)) {
         toast.error(err.data.message);
       }
     }
   };
-  useEffect(() => {
-    data?.token && navigate('/animes');
-  }, [data]);
+
   return (
     <section className={styles.formWrapper}>
       {isLoading && <Loading />}

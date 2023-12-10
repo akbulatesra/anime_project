@@ -21,7 +21,7 @@ export const sendEmailToUser = async (
   try {
     console.log(process.cwd());
     const htmlContent = await fs.readFile(
-      path.join(process.cwd(), '../public/email.html'),
+      path.join(process.cwd(), '/src/public/email.html'),
       {
         encoding: 'utf8',
       }

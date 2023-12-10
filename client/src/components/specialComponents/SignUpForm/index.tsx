@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { string, z } from 'zod';
 import { useRegisterMutation } from '../../../redux/signup';
@@ -19,7 +20,7 @@ interface SignUpForm {
 
 const SignUpForm: React.FC<SignUpForm> = ({ setSignUp }) => {
   const [register, { isLoading }] = useRegisterMutation();
-
+  const navigate = useNavigate();
   const formSchema = z.object({
     username: string().min(1, 'Please enter an username'),
     email: string().email('please valid an email'),
@@ -39,7 +40,8 @@ const SignUpForm: React.FC<SignUpForm> = ({ setSignUp }) => {
     }
 
     try {
-      await register(formData).unwrap();
+      const token = (await register(formData).unwrap()).token;
+      token && navigate('/animes');
     } catch (err) {
       if (isErrorWithMessage(err)) {
         toast.error(err.data.message);
