@@ -91,3 +91,32 @@
     grid-template-columns: repeat(2, minmax(20vw, 1fr));
   }
 }
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .buttonWrapper {
+    grid-template-columns: repeat(6, minmax(12vw, 1fr));
+    button {
+      width: 12vw;
+    }
+    gap: 20px;
+  }
+  .animesWrapper {
+    grid-template-columns: repeat(3, minmax(20vw, 1fr));
+  }
+}
+@media screen and (min-width: 1440px) and (max-width: 1919px) {
+  .wrapper {
+    gap: 30px;
+  }
+  .buttonWrapper {
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
+    button {
+      width: 12vw;
+      max-width: 150px;
+    }
+    gap: 20px;
+  }
+  .animesWrapper {
+    grid-template-columns: repeat(3, minmax(20vw, 1fr));
+  }
+}
