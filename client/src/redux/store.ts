@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { addAnimeApi } from './addAnime';
 import { animesApi } from './animes';
 import { deleteAnimeApi } from './deleteAnime';
+import { logoutApi } from './logout';
 import { loginApi } from './signin';
 import { authApi } from './signup';
 import { subscribedApi } from './subscribed';
@@ -13,6 +14,7 @@ export const store = configureStore({
     [addAnimeApi?.reducerPath]: addAnimeApi.reducer,
     [subscribedApi.reducerPath]: subscribedApi.reducer,
     [deleteAnimeApi.reducerPath]: deleteAnimeApi.reducer,
+    [logoutApi.reducerPath]: logoutApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -21,7 +23,8 @@ export const store = configureStore({
       loginApi.middleware,
       addAnimeApi.middleware,
       subscribedApi.middleware,
-      deleteAnimeApi.middleware
+      deleteAnimeApi.middleware,
+      logoutApi.middleware
     ),
 });
 

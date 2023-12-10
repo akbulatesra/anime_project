@@ -6,6 +6,13 @@
   overflow-y: auto;
   gap: 50px;
 }
+.exit {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  width: 80px;
+  cursor: pointer;
+}
 .search {
   width: 30vw;
   margin: 50px auto 0 auto;
@@ -52,6 +59,10 @@
     background-size: auto;
     gap: 30px;
   }
+  .exit {
+    width: 50px;
+    margin-bottom: 10px;
+  }
   .search {
     width: 70%;
     max-width: 500px;
@@ -90,6 +101,10 @@
   .animesWrapper {
     grid-template-columns: repeat(2, minmax(20vw, 1fr));
   }
+  .exit {
+    width: 60px;
+    margin-bottom: 10px;
+  }
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
@@ -102,6 +117,10 @@
   }
   .animesWrapper {
     grid-template-columns: repeat(3, minmax(20vw, 1fr));
+  }
+  .exit {
+    width: 60px;
+    margin-bottom: 10px;
   }
 }
 @media screen and (min-width: 1440px) and (max-width: 1919px) {
@@ -118,5 +137,9 @@
   }
   .animesWrapper {
     grid-template-columns: repeat(3, minmax(20vw, 1fr));
+  }
+  .exit {
+    width: 70px;
+    margin-bottom: 10px;
   }
 }

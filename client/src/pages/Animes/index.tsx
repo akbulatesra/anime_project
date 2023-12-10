@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Button } from '../../components/generalComponents/Buttons';
 import Loading from '../../components/generalComponents/Loading';
 import Wrapper from '../../components/generalComponents/Wrapper';
 import AnimeCard from '../../components/specialComponents/AnimeCard';
 import NoItem from '../../components/specialComponents/NoItem';
 import { useLazyListAnimesQuery } from '../../redux/animes';
+import { useLogoutMutation } from '../../redux/logout';
 import { useLazyListSubscribedAnimesQuery } from '../../redux/subscribed';
 import { useCreateGenres } from '../../utils/Hooks/useCreateGenres';
 import { useFilteredAnimes } from '../../utils/Hooks/useFilteredAnimes';
+import { isErrorWithMessage } from '../../utils/query';
 import styles from './styles.module.scss';
 
 const Animes = () => {
+  const navigate = useNavigate();
   const [listAnime, { data, isLoading }] = useLazyListAnimesQuery();
   const [
     listSubscribedAnime,
     { data: subscribedData, isLoading: isLoadingSubscribed },
   ] = useLazyListSubscribedAnimesQuery();
+  const [logout] = useLogoutMutation();
   const [selectedGenre, setSelectedGenre] = useState<string>('All');
   const [selectedButton, setSelectedButton] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,8 +47,27 @@ const Animes = () => {
     setSearchTerm(text);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      navigate('/');
+    } catch (error) {
+      if (isErrorWithMessage(error)) {
+        toast.error(error.data.message);
+      }
+    }
+  };
+
   return (
     <Wrapper extraStyle={styles.wrapper}>
+      <img
+        src="../../../public/assets/icons/exit.svg"
+        alt="exit"
+        className={styles.exit}
+        role="button"
+        aria-label="exit"
+        onClick={handleLogout}
+      />
       <input
         type="text"
         value={searchTerm}
