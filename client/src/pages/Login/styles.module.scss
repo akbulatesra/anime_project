@@ -13,3 +13,22 @@
   text-align: center;
   margin-top: 100px;
 }
+@media screen {
+  .image {
+    width: 100vw;
+  }
+  .part {
+    background-color: rgba(225, 225, 225, 0.9);
+    width: 80vw;
+    height: fit-content;
+    position: fixed;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 14px;
+  }
+  .title {
+    margin-top: 30px;
+  }
+}

@@ -64,3 +64,23 @@
   overflow-y: auto;
   font-size: 14px;
 }
+@media screen and (max-width: 767px) {
+  .box {
+    height: fit-content;
+  }
+  .infoWrapper {
+    gap: 20px;
+
+    img {
+      height: 150px;
+      width: 100px;
+      margin: 0;
+    }
+  }
+  .infoWrapperRight {
+    button {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+}

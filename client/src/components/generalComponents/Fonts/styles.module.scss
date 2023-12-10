@@ -2,3 +2,29 @@
   font-size: 70px;
   margin: 0;
 }
+.subtitle {
+  font-size: 40px;
+}
+.minititle {
+  font-size: 1.5rem;
+}
+.mainFont {
+  font-size: 16px;
+}
+.Info {
+  font-size: 16px;
+}
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 40px;
+  }
+  .subtitle {
+    font-size: 30px;
+  }
+  .minititle {
+    font-size: 1rem;
+  }
+  .Info {
+    font-size: 14px;
+  }
+}

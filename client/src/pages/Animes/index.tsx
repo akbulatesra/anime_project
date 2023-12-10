@@ -68,15 +68,13 @@ const Animes = () => {
       </section>
       {isLoading || isLoadingSubscribed ? (
         <Loading />
+      ) : filteredAnimes?.length === 0 ? (
+        <NoItem />
       ) : (
         <section className={styles.animesWrapper}>
-          {filteredAnimes?.length === 0 ? (
-            <NoItem />
-          ) : (
-            filteredAnimes?.map((item) => (
-              <AnimeCard anime={item} key={item.malId} />
-            ))
-          )}
+          {filteredAnimes?.map((item) => (
+            <AnimeCard anime={item} key={item.malId} />
+          ))}
         </section>
       )}
     </Wrapper>

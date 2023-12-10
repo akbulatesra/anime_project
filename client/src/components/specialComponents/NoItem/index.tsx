@@ -1,4 +1,4 @@
-import { MainFont } from '../../generalComponents/Fonts';
+import { SubTitle } from '../../generalComponents/Fonts';
 import styles from './styles.module.scss';
 const NoItem = () => {
   return (
@@ -7,7 +7,7 @@ const NoItem = () => {
         src="../../../../public/assets/images/NoItem.svg"
         alt="crying_anime"
       />
-      <MainFont>There is no data to display</MainFont>
+      <SubTitle>There is no data to display</SubTitle>
     </main>
   );
 };
