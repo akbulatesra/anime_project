@@ -1,5 +1,5 @@
-import axios from "axios";
-import cheerio from "cheerio";
+import axios from 'axios';
+import cheerio from 'cheerio';
 
 interface Season {
   malId: string | undefined;
@@ -20,12 +20,12 @@ export const searchAnimeOnMAL = async (animeName: string) => {
     const searchResults: unknown[] = [];
 
     // MyAnimeList'teki arama sonuçları sayfasındaki her anime için döngü
-    $(".list.di-t.w100").each((index, element) => {
-      const title = $(element).find(".information a").text().trim();
-      const imageUrl = $(element).find("img").attr("data-src");
+    $('.list.di-t.w100').each((index, element) => {
+      const title = $(element).find('.information a').text().trim();
+      const imageUrl = $(element).find('img').attr('data-src');
       const malId = $(element)
-        .find("a")
-        ?.attr("href")
+        .find('a')
+        ?.attr('href')
         ?.match(/anime\/(\d+)/)?.[1];
 
       // Sadece belirli bir sayıda sonuç göstermek için kontrol ekleyebilirsiniz
@@ -43,40 +43,42 @@ export const searchAnimeOnMAL = async (animeName: string) => {
 
 export const searchSeasonOnMAL = async () => {
   try {
-    const response = await axios.get("https://myanimelist.net/anime/season");
+    const response = await axios.get('https://myanimelist.net/anime/season');
     const html = response.data;
     const $ = cheerio.load(html);
 
     const animeList: Season[] = [];
 
-    $(".seasonal-anime").each((index, element) => {
+    $('.seasonal-anime').each((index, element) => {
       const genres: string[] = [];
-      const title = $(element).find(".h2_anime_title a").text().trim();
-      const imageUrl = $(element).find(".image img").attr("src");
+      const title = $(element).find('.h2_anime_title a').text().trim();
+      const imageUrl =
+        $(element).find('.image img').attr('src') ??
+        $(element).find('.image img').attr('data-src');
       const malId = $(element)
-        .find(".h2_anime_title a")
-        ?.attr("href")
+        .find('.h2_anime_title a')
+        ?.attr('href')
         ?.match(/anime\/(\d+)/)?.[1];
 
       const createdDate = $(element)
-        .find(".prodsrc .info .item:nth-child(1)")
+        .find('.prodsrc .info .item:nth-child(1)')
         .text()
         .trim();
       const episodesAndDuration = $(element)
-        .find(".prodsrc .info .item:nth-child(2)")
+        .find('.prodsrc .info .item:nth-child(2)')
         .text()
         .trim()
-        .replace("\n          ", "");
+        .replace('\n          ', '');
 
       $(element)
-        .find(".genre")
+        .find('.genre')
         .each((genreIndex, genreElement) => {
-          const genre = $(genreElement).find("a").text().trim();
+          const genre = $(genreElement).find('a').text().trim();
 
           genres.push(genre);
         });
 
-      const preLine = $(element).find(".preline").text().trim();
+      const preLine = $(element).find('.preline').text().trim();
 
       const anime = {
         malId,

@@ -10,15 +10,6 @@ import { Input_Email, Input_Password } from '../../generalComponents/Inputs';
 import Loading from '../../generalComponents/Loading';
 import styles from './styles.module.scss';
 
-function setCookie(name: string, value: string, days = 7) {
-  let expires = '';
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = '; expires=' + date.toUTCString();
-  }
-  document.cookie = name + '=' + (value || '') + expires + '; path=/';
-}
 interface SigninForm {
   setSignUp: Dispatch<SetStateAction<boolean>>;
 }
@@ -45,8 +36,7 @@ const SigninForm: React.FC<SigninForm> = ({ setSignUp }) => {
     }
 
     try {
-      const a = await register(formData).unwrap();
-      setCookie('token', a.token);
+      await register(formData).unwrap();
     } catch (err) {
       if (isErrorWithMessage(err)) {
         toast.error(err.data.message);
