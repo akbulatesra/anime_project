@@ -1,15 +1,15 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { StatusCodes } from "http-status-codes";
-import { ErrorSchema, authLoginSchema, authRegisterSchema } from "./schemas";
+import { createRoute, z } from '@hono/zod-openapi';
+import { StatusCodes } from 'http-status-codes';
+import { ErrorSchema, authLoginSchema, authRegisterSchema } from './schemas';
 
 export const registerRoute = createRoute({
-  method: "post",
-  path: "/register",
-  tags: ["auth"],
+  method: 'post',
+  path: '/register',
+  tags: ['auth'],
   request: {
     body: {
       content: {
-        "application/x-www-form-urlencoded": {
+        'application/x-www-form-urlencoded': {
           schema: authRegisterSchema,
         },
       },
@@ -18,16 +18,16 @@ export const registerRoute = createRoute({
   responses: {
     [StatusCodes.OK]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: z.object({ token: z.string() }),
         },
       },
-      description: "Retrieve the user",
+      description: 'Retrieve the user',
       headers: {
-        "Set-Cookie": {
+        'Set-Cookie': {
           schema: {
-            type: "string",
-            example: "token=abcde12345; Path=/; HttpOnly",
+            type: 'string',
+            example: 'token=abcde12345; Path=/; HttpOnly',
           },
         },
       },
@@ -35,32 +35,32 @@ export const registerRoute = createRoute({
 
     [StatusCodes.BAD_REQUEST]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ErrorSchema,
         },
       },
-      description: "Returns an error",
+      description: 'Returns an error',
     },
 
     [StatusCodes.CONFLICT]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ErrorSchema,
         },
       },
-      description: "Returns an error",
+      description: 'Returns an error',
     },
   },
 });
 
 export const loginRoute = createRoute({
-  tags: ["auth"],
-  method: "post",
-  path: "/login",
+  tags: ['auth'],
+  method: 'post',
+  path: '/login',
   request: {
     body: {
       content: {
-        "application/x-www-form-urlencoded": {
+        'application/x-www-form-urlencoded': {
           schema: authLoginSchema,
         },
       },
@@ -69,16 +69,16 @@ export const loginRoute = createRoute({
   responses: {
     [StatusCodes.OK]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: z.object({ token: z.string() }),
         },
       },
-      description: "Retrieve the user",
+      description: 'Retrieve the user',
       headers: {
-        "Set-Cookie": {
+        'Set-Cookie': {
           schema: {
-            type: "string",
-            example: "token=abcde12345; Path=/; HttpOnly",
+            type: 'string',
+            example: 'token=abcde12345; Path=/; HttpOnly',
           },
         },
       },
@@ -86,37 +86,37 @@ export const loginRoute = createRoute({
 
     [StatusCodes.BAD_REQUEST]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ErrorSchema,
         },
       },
-      description: "Returns an error",
+      description: 'Returns an error',
     },
 
     [StatusCodes.UNAUTHORIZED]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ErrorSchema,
         },
       },
-      description: "Returns an error",
+      description: 'Returns an error',
     },
 
     [StatusCodes.GONE]: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ErrorSchema,
         },
       },
-      description: "Returns an error",
+      description: 'Returns an error',
     },
   },
 });
 
 export const logoutRoute = createRoute({
-  tags: ["auth"],
-  method: "post",
-  path: "/log-out",
+  tags: ['auth'],
+  method: 'post',
+  path: '/log-out',
   request: {},
   responses: {
     [StatusCodes.NO_CONTENT]: {

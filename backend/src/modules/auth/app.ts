@@ -95,5 +95,5 @@ authApp.openapi(logoutRoute, async (c) => {
   deleteCookie(c, 'token', {
     path: '/',
   });
-  return c.json({}, StatusCodes.NO_CONTENT);
+  return c.json({ success: 'true' }, StatusCodes.OK);
 });
