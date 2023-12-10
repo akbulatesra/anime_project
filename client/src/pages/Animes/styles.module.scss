@@ -78,3 +78,16 @@
     overflow-y: auto;
   }
 }
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .buttonWrapper {
+    grid-template-columns: repeat(6, minmax(100px, 1fr));
+    gap: 20px;
+    button {
+      width: 100px;
+    }
+  }
+  .animesWrapper {
+    grid-template-columns: repeat(2, minmax(20vw, 1fr));
+  }
+}
