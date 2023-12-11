@@ -27,33 +27,36 @@ export const useFilteredAnimes = (
             id: item._id,
           })
         );
-        return temp;
-      } else if (selectedGenre === 'All' && !searchTerm) {
-        return filteredData;
-      } else if (selectedGenre === 'All' && searchTerm && searchTerm !== '') {
-        return filteredData?.filter(
-          (anime) =>
-            anime.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            searchTerm.toLowerCase().includes(anime.title.toLowerCase())
-        );
-      } else if (selectedGenre && !searchTerm) {
-        return (
-          filteredData.filter((anime) =>
-            anime?.genres?.includes(selectedGenre)
-          ) || []
-        );
-      } else if (selectedGenre && searchTerm) {
-        return (
-          filteredData.filter((anime) => {
-            const hasSelectedGenre = anime?.genres?.includes(selectedGenre);
-            const hasSearchTerm =
-              searchTerm &&
-              searchTerm !== '' &&
-              (anime.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                searchTerm.toLowerCase().includes(anime.title.toLowerCase()));
-            return hasSelectedGenre && hasSearchTerm;
-          }) || []
-        );
+
+        return searchTerm
+          ? temp
+          : temp?.filter(
+              (anime) =>
+                anime.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                searchTerm.toLowerCase().includes(anime.title.toLowerCase())
+            );
+      } else if (selectedGenre === 'All') {
+        return searchTerm
+          ? filteredData?.filter(
+              (anime) =>
+                anime.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                searchTerm.toLowerCase().includes(anime.title.toLowerCase())
+            )
+          : filteredData;
+      } else if (selectedGenre) {
+        return searchTerm
+          ? filteredData.filter((anime) => {
+              const hasSelectedGenre = anime?.genres?.includes(selectedGenre);
+              const hasSearchTerm =
+                searchTerm &&
+                searchTerm !== '' &&
+                (anime.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  searchTerm.toLowerCase().includes(anime.title.toLowerCase()));
+              return hasSelectedGenre && hasSearchTerm;
+            }) || []
+          : filteredData.filter((anime) =>
+              anime?.genres?.includes(selectedGenre)
+            ) || [];
       }
     }
   }, [data, selectedGenre, searchTerm, subscribedData]);
